@@ -44,20 +44,9 @@ billInput.addEventListener('input', function(e) {
 // Handle discount button
 const discountButton = document.getElementById('discount-button');
 const discountOptions = document.getElementById('discount-options');
-let discountTimeout;
 
-discountButton.addEventListener('mousedown', function() {
-    discountTimeout = setTimeout(() => {
-        discountOptions.classList.remove('hidden');
-    }, 500);
-});
-
-discountButton.addEventListener('mouseup', function() {
-    clearTimeout(discountTimeout);
-});
-
-discountButton.addEventListener('mouseleave', function() {
-    clearTimeout(discountTimeout);
+discountButton.addEventListener('dblclick', function() {
+    discountOptions.classList.remove('hidden');
 });
 
 document.addEventListener('click', function(e) {
@@ -78,20 +67,9 @@ discountOptions.addEventListener('click', function(e) {
 // Handle saving button
 const savingButton = document.getElementById('saving-button');
 const savingOptions = document.getElementById('saving-options');
-let savingTimeout;
 
-savingButton.addEventListener('mousedown', function() {
-    savingTimeout = setTimeout(() => {
-        savingOptions.classList.remove('hidden');
-    }, 500);
-});
-
-savingButton.addEventListener('mouseup', function() {
-    clearTimeout(savingTimeout);
-});
-
-savingButton.addEventListener('mouseleave', function() {
-    clearTimeout(savingTimeout);
+savingButton.addEventListener('dblclick', function() {
+    savingOptions.classList.remove('hidden');
 });
 
 document.addEventListener('click', function(e) {
