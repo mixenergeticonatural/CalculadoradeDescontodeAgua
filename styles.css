@@ -22,6 +22,7 @@ h1 {
     text-align: center;
     color: #333;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
 .input-group {
@@ -32,6 +33,7 @@ label {
     display: block;
     margin-bottom: 5px;
     color: #555;
+    font-weight: bold;
 }
 
 input, select {
@@ -40,19 +42,39 @@ input, select {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.result-group {
+input:focus, select:focus {
+    border-color: #007BFF;
+}
+
+.result-box {
     margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
     text-align: center;
 }
 
-.result-group label {
-    font-weight: bold;
-    color: #333;
+.saving-box {
+    background-color: #e3f2fd; /* Azul claro */
+    border: 1px solid #90caf9;
 }
 
-.result-group span {
+.economia-box {
+    background-color: #e8f5e9; /* Verde claro */
+    border: 1px solid #a5d6a7;
+}
+
+.result-box label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.result-box span {
     display: block;
     font-size: 18px;
     color: #007BFF;
