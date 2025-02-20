@@ -1,59 +1,69 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const contaReal = document.getElementById('conta-real');
-    const desconto = document.getElementById('desconto');
-    const saving = document.getElementById('saving');
-    const savingValue = document.getElementById('saving-value');
-    const economiaReal = document.getElementById('economia-real');
-    const economiaAno = document.getElementById('economia-ano');
-    const economiaPercentual = document.getElementById('economia-percentual');
+let currentDiscount = 50;
+let currentSaving = 22;
 
-    // Formatação de moeda brasileira
-    function formatarMoeda(valor) {
-        return new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(valor);
-    }
+function formatCurrency(value) {
+    return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
 
-    // Função para calcular a economia
-    function calcularEconomia() {
-        const valorConta = parseFloat(contaReal.value.replace(/[^0-9,-]/g, '').replace(',', '.'));
-        const percentualDesconto = parseFloat(desconto.value);
-        const percentualSaving = parseFloat(saving.value);
-
-        if (isNaN(valorConta)) {
-            alert('Por favor, insira um valor válido para a conta de água.');
-            return;
+function setDiscount(value) {
+    currentDiscount = value;
+    document.querySelectorAll('[data-value]').forEach(button => {
+        if (button.dataset.value == value && button.parentElement.previousElementSibling.textContent === 'Desconto') {
+            button.classList.add('selected');
+        } else if (button.parentElement.previousElementSibling.textContent === 'Desconto') {
+            button.classList.remove('selected');
         }
+    });
+    calculateResults();
+}
 
-        const valorDesconto = valorConta * (percentualDesconto / 100);
-        const valorSaving = valorDesconto * (percentualSaving / 100);
-        const valorEconomiaReal = valorDesconto - valorSaving;
-        const valorEconomiaAno = valorEconomiaReal * 12;
-        const percentualEconomia = (valorEconomiaReal / valorConta) * 100;
+function setSaving(value) {
+    currentSaving = value;
+    document.querySelectorAll('[data-value]').forEach(button => {
+        if (button.dataset.value == value && button.parentElement.previousElementSibling.textContent === 'Saving') {
+            button.classList.add('selected');
+        } else if (button.parentElement.previousElementSibling.textContent === 'Saving') {
+            button.classList.remove('selected');
+        }
+    });
+    calculateResults();
+}
 
-        // Atualiza os valores na tela
-        savingValue.textContent = formatarMoeda(valorSaving);
-        economiaReal.textContent = formatarMoeda(valorEconomiaReal);
-        economiaAno.textContent = formatarMoeda(valorEconomiaAno);
-        economiaPercentual.textContent = `${percentualEconomia.toFixed(2)}%`;
-    }
+function calculateResults() {
+    const billInput = document.getElementById('bill-value');
+    const billValue = parseFloat(billInput.value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
 
-    // Formata o campo de entrada para moeda brasileira
-    contaReal.addEventListener('input', function () {
-        let valor = contaReal.value.replace(/[^0-9]/g, '');
-        valor = (Number(valor) / 100).toLocaleString('pt-BR', {
+    const monthlyEconomy = (billValue * currentDiscount) / 100;
+    const yearlyEconomy = monthlyEconomy * 12;
+    const savingValue = (monthlyEconomy * currentSaving) / 100;
+    const realMonthlyEconomy = monthlyEconomy - savingValue;
+    const realYearlyEconomy = realMonthlyEconomy * 12;
+    const realEconomyPercentage = (realMonthlyEconomy / billValue) * 100 || 0;
+
+    document.getElementById('monthly-economy').textContent = formatCurrency(monthlyEconomy);
+    document.getElementById('yearly-economy').textContent = formatCurrency(yearlyEconomy);
+    document.getElementById('saving-value').textContent = formatCurrency(savingValue);
+    document.getElementById('real-monthly-economy').textContent = formatCurrency(realMonthlyEconomy);
+    document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
+    document.getElementById('real-economy-percentage').textContent = `${realEconomyPercentage.toFixed(2)}%`;
+}
+
+// Format input as currency
+const billInput = document.getElementById('bill-value');
+billInput.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value) {
+        value = (parseInt(value) / 100).toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL'
         });
-        contaReal.value = valor;
-        calcularEconomia();
-    });
-
-    // Atualiza os cálculos ao mudar os selects
-    desconto.addEventListener('change', calcularEconomia);
-    saving.addEventListener('change', calcularEconomia);
-
-    // Calcula os valores iniciais ao carregar a página
-    calcularEconomia();
+        e.target.value = value;
+    }
+    calculateResults();
 });
+
+// Initial calculation
+calculateResults();
