@@ -13,7 +13,7 @@ body {
 .container {
     padding: 20px;
     padding-top: 40px;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -80,7 +80,14 @@ h1 {
 
 .input-container {
     margin-bottom: 24px;
-    position: relative;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.label-bold {
+    font-weight: 700 !important;
 }
 
 label {
@@ -91,28 +98,63 @@ label {
     margin-bottom: 8px;
 }
 
-input, .value-button {
+input[type="text"] {
     width: 100%;
     background-color: #fff;
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 12px;
     font-size: 18px;
     border: 1px solid #e0e0e0;
     outline: none;
 }
 
-input:focus {
+input[type="text"]:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
+.slider {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #2563eb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.slider-value {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-top: 12px;
+}
+
 .value-button {
+    width: 100%;
     background-color: #2563eb;
     color: white;
     font-weight: 600;
     cursor: pointer;
     border: none;
     transition: background-color 0.2s ease;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 12px;
 }
 
 .value-button:hover {
@@ -154,15 +196,17 @@ input:focus {
 }
 
 .results-container {
-    margin-top: 32px;
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 16px;
+    margin-top: 32px;
 }
 
 .result-card {
-    background-color: #f1f3f5;
-    border-radius: 12px;
     padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .saving-card {
@@ -178,8 +222,8 @@ input:focus {
 }
 
 .discount-card {
-    border-radius: 12px;
-    padding: 20px;
+    grid-column: 1 / -1;
+    transition: all 0.3s ease;
 }
 
 .discount-card.positive {
@@ -193,42 +237,22 @@ input:focus {
 }
 
 @keyframes pulseGreen {
-    0% {
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
 }
 
 @keyframes pulseRed {
-    0% {
-        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
-    }
-}
-
-.free-installation {
-    color: #2e7d32;
-    font-weight: 600;
-    margin-top: 8px;
-    font-size: 14px;
+    0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
 }
 
 .result-label {
     display: block;
     font-size: 14px;
-    font-weight: 600;
     color: #666;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 }
 
 .result-value {
@@ -240,34 +264,35 @@ input:focus {
 
 .result-total {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     margin-top: 4px;
 }
 
 .result-formula {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     color: #666;
-    margin-top: 4px;
+    margin-top: 8px;
 }
 
-@media (max-width: 480px) {
+.free-installation {
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
     .container {
         padding: 16px;
-        padding-top: 32px;
     }
 
     h1 {
         font-size: 24px;
     }
 
-    .value-button {
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    .result-value {
-        font-size: 20px;
+    .results-container {
+        grid-template-columns: 1fr;
     }
 }
