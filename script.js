@@ -24,12 +24,12 @@ function calculateResults() {
     const isResidential = currentType === 'residential';
     const installmentValue = isResidential ? 280.00 : 690.00;
     const installments = isResidential ? 5 : 8;
-    const totalInstallation = installmentValue;
+    const totalInstallation = installmentValue * installments;
 
     // Update installation values
     document.getElementById('installation-value').textContent = formatCurrency(installmentValue);
     document.getElementById('installation-total').textContent = 
-        `${installments}x de ${formatCurrency(installmentValue / installments)}`;
+        `${installments}x de ${formatCurrency(installmentValue)}`;
 
     // Update economy values
     document.getElementById('monthly-economy').textContent = formatCurrency(monthlyEconomy);
@@ -40,12 +40,11 @@ function calculateResults() {
     document.getElementById('real-economy-5-years').textContent = formatCurrency(realEconomyIn5Years);
 
     // Calculate and update first payment
-    const monthlyPayment = totalInstallation / installments;
-    const balance = realMonthlyEconomy - monthlyPayment;
+    const balance = realMonthlyEconomy - totalInstallation;
     
     document.getElementById('first-payment').textContent = formatCurrency(balance);
     document.getElementById('payment-formula').textContent = 
-        `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(monthlyPayment)} = ${formatCurrency(balance)}`;
+        `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(totalInstallation)} = ${formatCurrency(balance)}`;
 
     // Update discount card style
     const discountCard = document.querySelector('.discount-card');
