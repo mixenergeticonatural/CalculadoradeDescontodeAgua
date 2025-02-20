@@ -1,5 +1,5 @@
 let currentType = 'residential';
-const savingPercentage = 22;
+let currentSaving = 22; // Adicionado para controlar o valor atual do Saving
 
 function formatCurrency(value) {
     return value.toLocaleString('pt-BR', {
@@ -16,7 +16,7 @@ function calculateResults() {
 
     const monthlyEconomy = (billValue * discountPercentage) / 100;
     const yearlyEconomy = monthlyEconomy * 12;
-    const savingValue = (monthlyEconomy * savingPercentage) / 100;
+    const savingValue = (monthlyEconomy * currentSaving) / 100; // Usando currentSaving
     const realMonthlyEconomy = monthlyEconomy - savingValue;
     const realYearlyEconomy = realMonthlyEconomy * 12;
     const realEconomyIn5Years = realYearlyEconomy * 5;
@@ -107,21 +107,21 @@ const savingButton = document.getElementById('saving-button');
 const savingOptions = document.getElementById('saving-options');
 
 savingButton.addEventListener('dblclick', function() {
-    savingOptions.classList.remove('hidden');
+    savingOptions.classList.toggle('hidden'); // Alternar a visibilidade do menu
 });
 
 document.addEventListener('click', function(e) {
     if (!savingOptions.contains(e.target) && e.target !== savingButton) {
-        savingOptions.classList.add('hidden');
+        savingOptions.classList.add('hidden'); // Ocultar o menu se clicar fora
     }
 });
 
 savingOptions.addEventListener('click', function(e) {
     if (e.target.classList.contains('option-button')) {
-        currentSaving = parseFloat(e.target.dataset.value);
-        savingButton.textContent = `${currentSaving}%`;
-        savingOptions.classList.add('hidden');
-        calculateResults();
+        currentSaving = parseFloat(e.target.dataset.value); // Atualizar o valor do Saving
+        savingButton.textContent = `${currentSaving}%`; // Atualizar o texto do botão
+        savingOptions.classList.add('hidden'); // Ocultar o menu após a seleção
+        calculateResults(); // Recalcular os resultados
     }
 });
 
