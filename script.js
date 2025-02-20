@@ -124,8 +124,8 @@ savingOptions.addEventListener('click', function(e) {
 // Inicializa a calculadora
 function initializeCalculator() {
     document.getElementById('bill-value').value = '';
-    document.getElementById('discount-range').value = 0;
-    document.getElementById('discount-value').textContent = '0%';
+    document.getElementById('discount-range').value = 35;
+    document.getElementById('discount-value').textContent = '35%';
     document.getElementById('monthly-economy').textContent = formatCurrency(0);
     document.getElementById('yearly-economy').textContent = formatCurrency(0);
     document.getElementById('saving-value').textContent = formatCurrency(0);
