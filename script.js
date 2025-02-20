@@ -8,6 +8,10 @@ function formatCurrency(value) {
     });
 }
 
+function formatPercentage(value) {
+    return `${value.toFixed(1)}%`;
+}
+
 function calculateResults() {
     const billInput = document.getElementById('bill-value');
     const discountRange = document.getElementById('discount-range');
@@ -20,6 +24,9 @@ function calculateResults() {
     const realMonthlyEconomy = monthlyEconomy - savingValue;
     const realYearlyEconomy = realMonthlyEconomy * 12;
     const realEconomyIn5Years = realYearlyEconomy * 5;
+
+    // Calcula a porcentagem real de desconto
+    const realDiscountPercentage = billValue > 0 ? (realMonthlyEconomy / billValue) * 100 : 0;
 
     const isResidential = currentType === 'residential';
     const totalInstallation = isResidential ? 195.00 : 390.00;
@@ -37,6 +44,7 @@ function calculateResults() {
     document.getElementById('real-monthly-economy').textContent = formatCurrency(realMonthlyEconomy);
     document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
     document.getElementById('real-economy-5-years').textContent = formatCurrency(realEconomyIn5Years);
+    document.getElementById('real-discount-percentage').textContent = formatPercentage(realDiscountPercentage);
 
     const balance = realMonthlyEconomy - totalInstallation;
     document.getElementById('first-payment').textContent = formatCurrency(balance);
@@ -132,6 +140,7 @@ function initializeCalculator() {
     document.getElementById('real-monthly-economy').textContent = formatCurrency(0);
     document.getElementById('real-yearly-economy').textContent = formatCurrency(0);
     document.getElementById('real-economy-5-years').textContent = formatCurrency(0);
+    document.getElementById('real-discount-percentage').textContent = formatPercentage(0);
     document.getElementById('first-payment').textContent = formatCurrency(0);
     document.getElementById('payment-formula').textContent = `${formatCurrency(0)} - ${formatCurrency(0)} = ${formatCurrency(0)}`;
 }
