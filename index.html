@@ -45,22 +45,18 @@
         </div>
         
         <div class="input-container">
-            <label for="bill-value">Valor da Fatura</label>
+            <label for="bill-value" class="label-bold">Valor da Fatura</label>
             <input type="text" id="bill-value" placeholder="R$ 0,00" inputmode="numeric">
         </div>
 
         <div class="input-container">
-            <label>Desconto</label>
-            <button id="discount-button" class="value-button">50%</button>
-            <div id="discount-options" class="options-dropdown hidden">
-                <button class="option-button" data-value="40">40%</button>
-                <button class="option-button selected" data-value="50">50%</button>
-                <button class="option-button" data-value="60">60%</button>
-            </div>
+            <label class="label-bold">Desconto</label>
+            <input type="range" id="discount-range" min="35" max="65" step="5" value="35" class="slider">
+            <div class="slider-value" id="discount-value">35%</div>
         </div>
 
         <div class="input-container">
-            <label>Saving</label>
+            <label class="label-bold">Saving</label>
             <button id="saving-button" class="value-button">22%</button>
             <div id="saving-options" class="options-dropdown hidden">
                 <button class="option-button" data-value="18.5">18.5%</button>
@@ -69,46 +65,46 @@
         </div>
 
         <div class="results-container">
-            <div class="result-card">
-                <span class="result-label">Economia Mensal</span>
+            <div class="result-card economy-card">
+                <span class="result-label label-bold">Economia Mensal</span>
                 <span class="result-value" id="monthly-economy">R$ 0,00</span>
             </div>
 
-            <div class="result-card">
-                <span class="result-label">Economia Anual</span>
+            <div class="result-card economy-card">
+                <span class="result-label label-bold">Economia Anual</span>
                 <span class="result-value" id="yearly-economy">R$ 0,00</span>
             </div>
 
             <div class="result-card saving-card">
-                <span class="result-label">Saving</span>
+                <span class="result-label label-bold">Saving</span>
                 <span class="result-value" id="saving-value">R$ 0,00</span>
             </div>
 
             <div class="result-card economy-card">
-                <span class="result-label">Economia Real Mensal</span>
+                <span class="result-label label-bold">Economia Real Mensal</span>
                 <span class="result-value" id="real-monthly-economy">R$ 0,00</span>
             </div>
 
             <div class="result-card economy-card">
-                <span class="result-label">Economia Real Anual</span>
+                <span class="result-label label-bold">Economia Real Anual</span>
                 <span class="result-value" id="real-yearly-economy">R$ 0,00</span>
             </div>
 
             <div class="result-card economy-card">
-                <span class="result-label">Porcentagem Economia Real Mensal</span>
-                <span class="result-value" id="real-economy-percentage">0%</span>
+                <span class="result-label label-bold">Economia Real em 5 Anos</span>
+                <span class="result-value" id="real-economy-5-years">R$ 0,00</span>
             </div>
 
             <div class="result-card installation-card">
-                <span class="result-label">Valor da Instalação</span>
-                <span class="result-value" id="installation-value">5x R$ 39,90</span>
-                <span class="result-total" id="installation-total">Total: R$ 199,50</span>
+                <span class="result-label label-bold">Valor da Instalação</span>
+                <span class="result-value" id="installation-value">R$ 0,00</span>
+                <span class="result-total" id="installation-total"></span>
             </div>
 
             <div class="result-card discount-card">
-                <span class="result-label">Pague com o desconto do seu primeiro mês</span>
+                <span class="result-label label-bold">Pague com o desconto do seu primeiro mês</span>
                 <span class="result-value" id="first-payment">R$ 0,00</span>
-                <span class="result-formula" id="payment-formula">Economia - Parcela = Economia Real</span>
+                <span class="result-formula" id="payment-formula"></span>
             </div>
         </div>
     </div>
