@@ -161,6 +161,25 @@ input[type="text"]:focus {
     background-color: #1d4ed8;
 }
 
+/* Ajuste para o menu de saving-options */
+#saving-options {
+    position: absolute;
+    bottom: 100%; /* Posiciona o menu acima do botão */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    display: none; /* Inicialmente escondido */
+}
+
+#saving-options.visible {
+    display: block; /* Mostra o menu quando a classe 'visible' é adicionada */
+}
+
 .options-dropdown {
     position: absolute;
     top: 100%;
