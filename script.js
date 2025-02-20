@@ -1,5 +1,6 @@
 let currentDiscount = 50;
 let currentSaving = 22;
+let currentType = 'residential';
 
 function formatCurrency(value) {
     return value.toLocaleString('pt-BR', {
@@ -19,12 +20,50 @@ function calculateResults() {
     const realYearlyEconomy = realMonthlyEconomy * 12;
     const realEconomyPercentage = (realMonthlyEconomy / billValue) * 100 || 0;
 
+    // Installation values
+    const isResidential = currentType === 'residential';
+    const installmentValue = isResidential ? 39.90 : 79.90;
+    const installments = isResidential ? 5 : 8;
+    const totalInstallation = installmentValue * installments;
+
+    // First payment calculation
+    const balance = realMonthlyEconomy - totalInstallation;
+    const formula = `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(totalInstallation)} = ${formatCurrency(balance)}`;
+
+    // Update discount card style based on balance
+    const discountCard = document.querySelector('.discount-card');
+    const freeInstallationText = document.getElementById('free-installation-text');
+    
+    if (balance >= 0) {
+        discountCard.classList.remove('negative');
+        discountCard.classList.add('positive');
+        if (!freeInstallationText) {
+            const text = document.createElement('div');
+            text.id = 'free-installation-text';
+            text.className = 'free-installation';
+            text.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro! ✨';
+            discountCard.appendChild(text);
+        }
+    } else {
+        discountCard.classList.remove('positive');
+        discountCard.classList.add('negative');
+        if (freeInstallationText) {
+            freeInstallationText.remove();
+        }
+    }
+
     document.getElementById('monthly-economy').textContent = formatCurrency(monthlyEconomy);
     document.getElementById('yearly-economy').textContent = formatCurrency(yearlyEconomy);
     document.getElementById('saving-value').textContent = formatCurrency(savingValue);
     document.getElementById('real-monthly-economy').textContent = formatCurrency(realMonthlyEconomy);
     document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
     document.getElementById('real-economy-percentage').textContent = `${realEconomyPercentage.toFixed(2)}%`;
+    
+    document.getElementById('installation-value').textContent = `${installments}x ${formatCurrency(installmentValue)}`;
+    document.getElementById('installation-total').textContent = `Total: ${formatCurrency(totalInstallation)}`;
+    
+    document.getElementById('first-payment').textContent = formatCurrency(balance);
+    document.getElementById('payment-formula').textContent = formula;
 }
 
 // Format input as currency
@@ -39,6 +78,17 @@ billInput.addEventListener('input', function(e) {
         e.target.value = value;
     }
     calculateResults();
+});
+
+// Handle type selection
+const typeButtons = document.querySelectorAll('.type-button');
+typeButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        typeButtons.forEach(btn => btn.classList.remove('selected'));
+        this.classList.add('selected');
+        currentType = this.dataset.type;
+        calculateResults();
+    });
 });
 
 // Handle discount button
