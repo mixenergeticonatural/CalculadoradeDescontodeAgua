@@ -12,21 +12,33 @@ body {
 
 .container {
     padding: 20px;
-    padding-top: 60px;
+    padding-top: 40px;
     max-width: 600px;
     margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.calculator-icon {
+    color: #2563eb;
 }
 
 h1 {
     font-size: 28px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 30px;
     text-align: center;
 }
 
 .input-container {
     margin-bottom: 24px;
+    position: relative;
 }
 
 label {
@@ -37,7 +49,7 @@ label {
     margin-bottom: 8px;
 }
 
-input {
+input, .value-button {
     width: 100%;
     background-color: #fff;
     border-radius: 12px;
@@ -48,42 +60,60 @@ input {
 }
 
 input:focus {
-    border-color: #007AFF;
-    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-.options-container {
-    display: flex;
-    gap: 12px;
+.value-button {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+.value-button:hover {
+    background-color: #1d4ed8;
+}
+
+.options-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e0e0;
+    z-index: 10;
+    padding: 8px;
+}
+
+.options-dropdown.hidden {
+    display: none;
 }
 
 .option-button {
-    flex: 1;
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    font-size: 18px;
-    font-weight: 600;
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 16px;
     color: #4a4a4a;
-    border: 1px solid #e0e0e0;
     cursor: pointer;
-    transition: all 0.2s ease;
+    border-radius: 8px;
 }
 
 .option-button:hover {
     background-color: #f8f9fa;
 }
 
-.option-button.selected {
-    background-color: #007AFF;
-    border-color: #007AFF;
-    color: #fff;
-}
-
 .results-container {
     margin-top: 32px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 16px;
 }
 
@@ -119,15 +149,14 @@ input:focus {
 @media (max-width: 480px) {
     .container {
         padding: 16px;
-        padding-top: 40px;
+        padding-top: 32px;
     }
 
     h1 {
         font-size: 24px;
-        margin-bottom: 24px;
     }
 
-    .option-button {
+    .value-button {
         padding: 12px;
         font-size: 16px;
     }
