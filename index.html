@@ -11,13 +11,13 @@
         <h1>Calculadora de Desconto</h1>
         <div class="input-group">
             <label for="conta-real">Conta Real (R$)</label>
-            <input type="number" id="conta-real" placeholder="Insira o valor da fatura">
+            <input type="text" id="conta-real" placeholder="R$ 0,00">
         </div>
         <div class="input-group">
             <label for="desconto">Desconto (%)</label>
             <select id="desconto">
                 <option value="40">40%</option>
-                <option value="50">50%</option>
+                <option value="50" selected>50%</option>
                 <option value="60">60%</option>
             </select>
         </div>
@@ -25,18 +25,22 @@
             <label for="saving">Saving (%)</label>
             <select id="saving">
                 <option value="18.5">18.5%</option>
-                <option value="22">22%</option>
+                <option value="22" selected>22%</option>
             </select>
         </div>
-        <div class="result-group">
+        <div class="result-box saving-box">
+            <label>Saving (R$)</label>
+            <span id="saving-value">R$ 0,00</span>
+        </div>
+        <div class="result-box economia-box">
             <label>Economia Real (R$)</label>
             <span id="economia-real">R$ 0,00</span>
         </div>
-        <div class="result-group">
+        <div class="result-box economia-box">
             <label>Economia Real (ANO)</label>
             <span id="economia-ano">R$ 0,00</span>
         </div>
-        <div class="result-group">
+        <div class="result-box economia-box">
             <label>Economia Real (%)</label>
             <span id="economia-percentual">0%</span>
         </div>
