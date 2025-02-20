@@ -23,6 +23,26 @@
             </svg>
             <h1>Calculadora de Economia na Conta de Água</h1>
         </div>
+
+        <div class="type-selector">
+            <button class="type-button selected" data-type="residential">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                Residencial
+            </button>
+            <button class="type-button" data-type="commercial">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 21h18"></path>
+                    <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4"></path>
+                    <path d="M5 21V10.85"></path>
+                    <path d="M19 21V10.85"></path>
+                    <path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"></path>
+                </svg>
+                Comercial
+            </button>
+        </div>
         
         <div class="input-container">
             <label for="bill-value">Valor da Fatura</label>
@@ -77,6 +97,18 @@
             <div class="result-card economy-card">
                 <span class="result-label">Porcentagem Economia Real Mensal</span>
                 <span class="result-value" id="real-economy-percentage">0%</span>
+            </div>
+
+            <div class="result-card installation-card">
+                <span class="result-label">Valor da Instalação</span>
+                <span class="result-value" id="installation-value">5x R$ 39,90</span>
+                <span class="result-total" id="installation-total">Total: R$ 199,50</span>
+            </div>
+
+            <div class="result-card discount-card">
+                <span class="result-label">Pague com o desconto do seu primeiro mês</span>
+                <span class="result-value" id="first-payment">R$ 0,00</span>
+                <span class="result-formula" id="payment-formula">Economia - Parcela = Economia Real</span>
             </div>
         </div>
     </div>
