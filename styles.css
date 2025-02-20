@@ -84,6 +84,7 @@ h1 {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .label-bold {
@@ -159,21 +160,6 @@ input[type="text"]:focus {
 
 .value-button:hover {
     background-color: #1d4ed8;
-}
-
-#saving-options {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    z-index: 1000;
-    display: none;
-}
-
-#saving-options.visible {
-    display: block;
 }
 
 .options-dropdown {
