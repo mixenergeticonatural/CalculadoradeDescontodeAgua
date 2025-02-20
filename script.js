@@ -110,20 +110,19 @@ savingButton.addEventListener('dblclick', function() {
     savingOptions.classList.toggle('visible'); // Alterna a visibilidade do menu
 });
 
-// Fecha o menu ao clicar fora
 document.addEventListener('click', function(e) {
-    if (!savingButton.contains(e.target) {
+    // Fecha o menu se o clique for fora do botão ou do menu
+    if (!savingButton.contains(e.target) && !savingOptions.contains(e.target)) {
         savingOptions.classList.remove('visible');
     }
 });
 
-// Seleciona uma opção e fecha o menu
 savingOptions.addEventListener('click', function(e) {
     if (e.target.classList.contains('option-button')) {
-        const selectedValue = e.target.dataset.value;
-        savingButton.textContent = `${selectedValue}%`;
-        savingOptions.classList.remove('visible'); // Fecha o menu
-        calculateResults(); // Atualiza os cálculos
+        currentSaving = parseFloat(e.target.dataset.value);
+        savingButton.textContent = `${currentSaving}%`;
+        savingOptions.classList.remove('visible'); // Fecha o menu após selecionar uma opção
+        calculateResults();
     }
 });
 
