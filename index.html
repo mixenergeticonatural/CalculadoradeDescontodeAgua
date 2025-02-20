@@ -3,46 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Desconto na Conta de Água</title>
+    <title>Calculadora de Economia</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Desconto</h1>
-        <div class="input-group">
-            <label for="conta-real">Conta Real (R$)</label>
-            <input type="text" id="conta-real" placeholder="R$ 0,00">
+        <h1>Calculadora de Economia</h1>
+        
+        <div class="input-container">
+            <label for="bill-value">Valor da Fatura</label>
+            <input type="text" id="bill-value" placeholder="Insira o valor da fatura" inputmode="numeric">
         </div>
-        <div class="input-group">
-            <label for="desconto">Desconto (%)</label>
-            <select id="desconto">
-                <option value="40">40%</option>
-                <option value="50" selected>50%</option>
-                <option value="60">60%</option>
-            </select>
+
+        <div class="input-container">
+            <label>Desconto</label>
+            <div class="options-container">
+                <button class="option-button" data-value="40" onclick="setDiscount(40)">40%</button>
+                <button class="option-button selected" data-value="50" onclick="setDiscount(50)">50%</button>
+                <button class="option-button" data-value="60" onclick="setDiscount(60)">60%</button>
+            </div>
         </div>
-        <div class="input-group">
-            <label for="saving">Saving (%)</label>
-            <select id="saving">
-                <option value="18.5">18.5%</option>
-                <option value="22" selected>22%</option>
-            </select>
+
+        <div class="input-container">
+            <label>Saving</label>
+            <div class="options-container">
+                <button class="option-button selected" data-value="22" onclick="setSaving(22)">22%</button>
+                <button class="option-button" data-value="18.5" onclick="setSaving(18.5)">18.5%</button>
+            </div>
         </div>
-        <div class="result-box saving-box">
-            <label>Saving (R$)</label>
-            <span id="saving-value">R$ 0,00</span>
-        </div>
-        <div class="result-box economia-box">
-            <label>Economia Real (R$)</label>
-            <span id="economia-real">R$ 0,00</span>
-        </div>
-        <div class="result-box economia-box">
-            <label>Economia Real (ANO)</label>
-            <span id="economia-ano">R$ 0,00</span>
-        </div>
-        <div class="result-box economia-box">
-            <label>Economia Real (%)</label>
-            <span id="economia-percentual">0%</span>
+
+        <div class="results-container">
+            <div class="result-card">
+                <span class="result-label">Economia Mensal</span>
+                <span class="result-value" id="monthly-economy">R$ 0,00</span>
+            </div>
+
+            <div class="result-card">
+                <span class="result-label">Economia Anual</span>
+                <span class="result-value" id="yearly-economy">R$ 0,00</span>
+            </div>
+
+            <div class="result-card saving-card">
+                <span class="result-label">Saving</span>
+                <span class="result-value" id="saving-value">R$ 0,00</span>
+            </div>
+
+            <div class="result-card economy-card">
+                <span class="result-label">Economia Real Mensal</span>
+                <span class="result-value" id="real-monthly-economy">R$ 0,00</span>
+            </div>
+
+            <div class="result-card economy-card">
+                <span class="result-label">Economia Real Anual</span>
+                <span class="result-value" id="real-yearly-economy">R$ 0,00</span>
+            </div>
+
+            <div class="result-card economy-card">
+                <span class="result-label">Porcentagem Economia Real Mensal</span>
+                <span class="result-value" id="real-economy-percentage">0%</span>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
