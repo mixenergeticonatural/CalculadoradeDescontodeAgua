@@ -223,31 +223,37 @@ input[type="text"]:focus {
     color: white;
 }
 
-/* Economia Real Mensal e Economia Real Anual */
-.result-card:nth-child(4),
-.result-card:nth-child(5) {
+/* Saving */
+.saving-card {
+    background-color: #e3f2fd;
+}
+
+/* Desconto Real */
+.real-discount-card {
     background-color: #e8f5e9;
 }
 
-.result-card:nth-child(4) .result-label,
-.result-card:nth-child(4) .result-value,
-.result-card:nth-child(5) .result-label,
-.result-card:nth-child(5) .result-value {
-    color: #1a1a1a;
-}
-
-/* Economia Real em 5 Anos */
+/* Economia Real Mensal e Economia Real Anual */
+.result-card:nth-child(5),
 .result-card:nth-child(6) {
-    background-color: #ffab40;
+    background-color: #e8f5e9;
 }
 
+.result-card:nth-child(5) .result-label,
+.result-card:nth-child(5) .result-value,
 .result-card:nth-child(6) .result-label,
 .result-card:nth-child(6) .result-value {
     color: #1a1a1a;
 }
 
-.saving-card {
-    background-color: #e3f2fd;
+/* Economia Real em 5 Anos */
+.result-card:nth-child(7) {
+    background-color: #ffab40;
+}
+
+.result-card:nth-child(7) .result-label,
+.result-card:nth-child(7) .result-value {
+    color: #1a1a1a;
 }
 
 .installation-card {
