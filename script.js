@@ -107,12 +107,13 @@ const savingButton = document.getElementById('saving-button');
 const savingOptions = document.getElementById('saving-options');
 
 savingButton.addEventListener('dblclick', function() {
-    savingOptions.classList.remove('hidden');
+    savingOptions.classList.toggle('visible'); // Alterna a visibilidade do menu
 });
 
 document.addEventListener('click', function(e) {
-    if (!savingOptions.contains(e.target) && e.target !== savingButton) {
-        savingOptions.classList.add('hidden');
+    // Fecha o menu se o clique for fora do botão ou do menu
+    if (!savingButton.contains(e.target) && !savingOptions.contains(e.target)) {
+        savingOptions.classList.remove('visible');
     }
 });
 
@@ -120,7 +121,7 @@ savingOptions.addEventListener('click', function(e) {
     if (e.target.classList.contains('option-button')) {
         currentSaving = parseFloat(e.target.dataset.value);
         savingButton.textContent = `${currentSaving}%`;
-        savingOptions.classList.add('hidden');
+        savingOptions.classList.remove('visible'); // Fecha o menu após selecionar uma opção
         calculateResults();
     }
 });
