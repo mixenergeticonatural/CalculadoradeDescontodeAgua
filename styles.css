@@ -36,6 +36,48 @@ h1 {
     text-align: center;
 }
 
+.type-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.type-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.type-button svg {
+    color: #4a4a4a;
+    transition: color 0.2s ease;
+}
+
+.type-button:hover {
+    background-color: #f8f9fa;
+}
+
+.type-button.selected {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+}
+
+.type-button.selected svg {
+    color: #fff;
+}
+
 .input-container {
     margin-bottom: 24px;
     position: relative;
@@ -131,6 +173,56 @@ input:focus {
     background-color: #e8f5e9;
 }
 
+.installation-card {
+    background-color: #fff9c4;
+}
+
+.discount-card {
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.discount-card.positive {
+    background-color: #e8f5e9;
+    animation: pulseGreen 2s infinite;
+}
+
+.discount-card.negative {
+    background-color: #ffebee;
+    animation: pulseRed 2s infinite;
+}
+
+@keyframes pulseGreen {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+@keyframes pulseRed {
+    0% {
+        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+    }
+}
+
+.free-installation {
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
 .result-label {
     display: block;
     font-size: 14px;
@@ -144,6 +236,20 @@ input:focus {
     font-size: 24px;
     font-weight: 700;
     color: #1a1a1a;
+}
+
+.result-total {
+    display: block;
+    font-size: 16px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.result-formula {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
 }
 
 @media (max-width: 480px) {
