@@ -8,30 +8,6 @@ function formatCurrency(value) {
     });
 }
 
-function setDiscount(value) {
-    currentDiscount = value;
-    document.querySelectorAll('[data-value]').forEach(button => {
-        if (button.dataset.value == value && button.parentElement.previousElementSibling.textContent === 'Desconto') {
-            button.classList.add('selected');
-        } else if (button.parentElement.previousElementSibling.textContent === 'Desconto') {
-            button.classList.remove('selected');
-        }
-    });
-    calculateResults();
-}
-
-function setSaving(value) {
-    currentSaving = value;
-    document.querySelectorAll('[data-value]').forEach(button => {
-        if (button.dataset.value == value && button.parentElement.previousElementSibling.textContent === 'Saving') {
-            button.classList.add('selected');
-        } else if (button.parentElement.previousElementSibling.textContent === 'Saving') {
-            button.classList.remove('selected');
-        }
-    });
-    calculateResults();
-}
-
 function calculateResults() {
     const billInput = document.getElementById('bill-value');
     const billValue = parseFloat(billInput.value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
@@ -63,6 +39,74 @@ billInput.addEventListener('input', function(e) {
         e.target.value = value;
     }
     calculateResults();
+});
+
+// Handle discount button
+const discountButton = document.getElementById('discount-button');
+const discountOptions = document.getElementById('discount-options');
+let discountTimeout;
+
+discountButton.addEventListener('mousedown', function() {
+    discountTimeout = setTimeout(() => {
+        discountOptions.classList.remove('hidden');
+    }, 500);
+});
+
+discountButton.addEventListener('mouseup', function() {
+    clearTimeout(discountTimeout);
+});
+
+discountButton.addEventListener('mouseleave', function() {
+    clearTimeout(discountTimeout);
+});
+
+document.addEventListener('click', function(e) {
+    if (!discountOptions.contains(e.target) && e.target !== discountButton) {
+        discountOptions.classList.add('hidden');
+    }
+});
+
+discountOptions.addEventListener('click', function(e) {
+    if (e.target.classList.contains('option-button')) {
+        currentDiscount = parseFloat(e.target.dataset.value);
+        discountButton.textContent = `${currentDiscount}%`;
+        discountOptions.classList.add('hidden');
+        calculateResults();
+    }
+});
+
+// Handle saving button
+const savingButton = document.getElementById('saving-button');
+const savingOptions = document.getElementById('saving-options');
+let savingTimeout;
+
+savingButton.addEventListener('mousedown', function() {
+    savingTimeout = setTimeout(() => {
+        savingOptions.classList.remove('hidden');
+    }, 500);
+});
+
+savingButton.addEventListener('mouseup', function() {
+    clearTimeout(savingTimeout);
+});
+
+savingButton.addEventListener('mouseleave', function() {
+    clearTimeout(savingTimeout);
+});
+
+document.addEventListener('click', function(e) {
+    if (!savingOptions.contains(e.target) && e.target !== savingButton) {
+        savingOptions.classList.add('hidden');
+    }
+});
+
+savingOptions.addEventListener('click', function(e) {
+    if (e.target.classList.contains('option-button')) {
+        currentSaving = parseFloat(e.target.dataset.value);
+        savingButton.textContent = `${currentSaving}%`;
+        savingOptions.classList.add('hidden');
+        calculateResults();
+    }
 });
 
 // Initial calculation
