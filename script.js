@@ -1,140 +1,331 @@
-let currentType = 'residential';
-let currentSaving = 22; // Valor inicial do Saving
-
-function formatCurrency(value) {
-    return value.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    });
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-function calculateResults() {
-    const billInput = document.getElementById('bill-value');
-    const discountRange = document.getElementById('discount-range');
-    const billValue = parseFloat(billInput.value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
-    const discountPercentage = parseInt(discountRange.value);
-
-    const monthlyEconomy = (billValue * discountPercentage) / 100;
-    const yearlyEconomy = monthlyEconomy * 12;
-    const savingValue = (monthlyEconomy * currentSaving) / 100; // Usando currentSaving
-    const realMonthlyEconomy = monthlyEconomy - savingValue;
-    const realYearlyEconomy = realMonthlyEconomy * 12;
-    const realEconomyIn5Years = realYearlyEconomy * 5;
-
-    const isResidential = currentType === 'residential';
-    const totalInstallation = isResidential ? 195.00 : 390.00;
-    const installmentValue = isResidential ? 38.99 : 48.75;
-    const installments = isResidential ? 5 : 8;
-
-    // Atualiza os valores na interface
-    document.getElementById('installation-value').textContent = formatCurrency(totalInstallation);
-    document.getElementById('installation-total').textContent = 
-        `${installments}x de ${formatCurrency(installmentValue)}`;
-
-    document.getElementById('monthly-economy').textContent = formatCurrency(monthlyEconomy);
-    document.getElementById('yearly-economy').textContent = formatCurrency(yearlyEconomy);
-    document.getElementById('saving-value').textContent = formatCurrency(savingValue);
-    document.getElementById('real-monthly-economy').textContent = formatCurrency(realMonthlyEconomy);
-    document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
-    document.getElementById('real-economy-5-years').textContent = formatCurrency(realEconomyIn5Years);
-
-    const balance = realMonthlyEconomy - totalInstallation;
-    document.getElementById('first-payment').textContent = formatCurrency(balance);
-    document.getElementById('payment-formula').textContent = 
-        `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(totalInstallation)} = ${formatCurrency(balance)}`;
-
-    const discountCard = document.querySelector('.discount-card');
-    const existingMessage = discountCard.querySelector('.free-installation');
-    
-    if (balance >= 0) {
-        discountCard.classList.remove('negative');
-        discountCard.classList.add('positive');
-        if (!existingMessage) {
-            const message = document.createElement('div');
-            message.className = 'free-installation';
-            message.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro!';
-            discountCard.appendChild(message);
-        }
-    } else {
-        discountCard.classList.remove('positive');
-        discountCard.classList.add('negative');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-    }
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
 }
 
-// Formata o valor da fatura como moeda
-const billInput = document.getElementById('bill-value');
-billInput.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value) {
-        value = (parseInt(value) / 100).toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        });
-        e.target.value = value;
-    }
-    calculateResults();
-});
-
-// Seleção de tipo (residencial/comercial)
-const typeButtons = document.querySelectorAll('.type-button');
-typeButtons.forEach(button => {
-    button.addEventListener('click', function() {
-        typeButtons.forEach(btn => btn.classList.remove('selected'));
-        this.classList.add('selected');
-        currentType = this.dataset.type;
-        calculateResults();
-    });
-});
-
-// Atualiza o valor do desconto
-const discountRange = document.getElementById('discount-range');
-const discountValue = document.getElementById('discount-value');
-
-discountRange.addEventListener('input', function() {
-    discountValue.textContent = `${this.value}%`;
-    calculateResults();
-});
-
-// Botão Saving
-const savingButton = document.getElementById('saving-button');
-const savingOptions = document.getElementById('saving-options');
-
-savingButton.addEventListener('dblclick', function() {
-    savingOptions.classList.toggle('hidden');
-});
-
-document.addEventListener('click', function(e) {
-    if (!savingOptions.contains(e.target) && e.target !== savingButton) {
-        savingOptions.classList.add('hidden');
-    }
-});
-
-savingOptions.addEventListener('click', function(e) {
-    if (e.target.classList.contains('option-button')) {
-        currentSaving = parseFloat(e.target.dataset.value);
-        savingButton.textContent = `${currentSaving}%`;
-        savingOptions.classList.add('hidden');
-        calculateResults();
-    }
-});
-
-// Inicializa a calculadora
-function initializeCalculator() {
-    document.getElementById('bill-value').value = '';
-    document.getElementById('discount-range').value = 35;
-    document.getElementById('discount-value').textContent = '35%';
-    document.getElementById('monthly-economy').textContent = formatCurrency(0);
-    document.getElementById('yearly-economy').textContent = formatCurrency(0);
-    document.getElementById('saving-value').textContent = formatCurrency(0);
-    document.getElementById('real-monthly-economy').textContent = formatCurrency(0);
-    document.getElementById('real-yearly-economy').textContent = formatCurrency(0);
-    document.getElementById('real-economy-5-years').textContent = formatCurrency(0);
-    document.getElementById('first-payment').textContent = formatCurrency(0);
-    document.getElementById('payment-formula').textContent = `${formatCurrency(0)} - ${formatCurrency(0)} = ${formatCurrency(0)}`;
+.container {
+    padding: 20px;
+    padding-top: 40px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-initializeCalculator();
-calculateResults();
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.calculator-icon {
+    color: #2563eb;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+.type-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.type-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.type-button svg {
+    color: #4a4a4a;
+    transition: color 0.2s ease;
+}
+
+.type-button:hover {
+    background-color: #f8f9fa;
+}
+
+.type-button.selected {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+}
+
+.type-button.selected svg {
+    color: #fff;
+}
+
+.input-container {
+    margin-bottom: 24px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.label-bold {
+    font-weight: 700 !important;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 18px;
+    border: 1px solid #e0e0e0;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #2563eb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.slider-value {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-top: 12px;
+}
+
+.value-button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 12px;
+}
+
+.value-button:hover {
+    background-color: #1d4ed8;
+}
+
+.options-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e0e0;
+    z-index: 10;
+    padding: 8px;
+}
+
+.options-dropdown.hidden {
+    display: none;
+}
+
+.option-button {
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #4a4a4a;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.option-button:hover {
+    background-color: #f8f9fa;
+}
+
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.result-card {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Economia Mensal e Economia Anual */
+.result-card:nth-child(1),
+.result-card:nth-child(2) {
+    background-color: #4a5568;
+}
+
+.result-card:nth-child(1) .result-label,
+.result-card:nth-child(1) .result-value,
+.result-card:nth-child(2) .result-label,
+.result-card:nth-child(2) .result-value {
+    color: white;
+}
+
+/* Economia Real Mensal e Economia Real Anual */
+.result-card:nth-child(4),
+.result-card:nth-child(5) {
+    background-color: #e8f5e9;
+}
+
+.result-card:nth-child(4) .result-label,
+.result-card:nth-child(4) .result-value,
+.result-card:nth-child(5) .result-label,
+.result-card:nth-child(5) .result-value {
+    color: #1a1a1a;
+}
+
+/* Economia Real em 5 Anos */
+.result-card:nth-child(6) {
+    background-color: #ffab40;
+}
+
+.result-card:nth-child(6) .result-label,
+.result-card:nth-child(6) .result-value {
+    color: #1a1a1a;
+}
+
+.saving-card {
+    background-color: #e3f2fd;
+}
+
+.installation-card {
+    background-color: #fff9c4;
+}
+
+.discount-card {
+    grid-column: 1 / -1;
+    transition: all 0.3s ease;
+}
+
+.discount-card.positive {
+    background-color: #e8f5e9;
+    animation: pulseGreen 2s infinite;
+}
+
+.discount-card.negative {
+    background-color: #ffebee;
+    animation: pulseRed 2s infinite;
+}
+
+@keyframes pulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+}
+
+.result-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.result-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.result-total {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.result-formula {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.free-installation {
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .results-container {
+        grid-template-columns: 1fr;
+    }
+}
