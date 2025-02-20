@@ -3,32 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Economia</title>
+    <title>Calculadora de Economia na Conta de Água</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Economia</h1>
+        <div class="header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="calculator-icon">
+                <rect width="16" height="20" x="4" y="2" rx="2"></rect>
+                <line x1="8" x2="16" y1="6" y2="6"></line>
+                <line x1="16" x2="16" y1="14" y2="18"></line>
+                <path d="M16 10h.01"></path>
+                <path d="M12 10h.01"></path>
+                <path d="M8 10h.01"></path>
+                <path d="M12 14h.01"></path>
+                <path d="M8 14h.01"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M8 18h.01"></path>
+            </svg>
+            <h1>Calculadora de Economia na Conta de Água</h1>
+        </div>
         
         <div class="input-container">
             <label for="bill-value">Valor da Fatura</label>
-            <input type="text" id="bill-value" placeholder="Insira o valor da fatura" inputmode="numeric">
+            <input type="text" id="bill-value" placeholder="R$ 0,00" inputmode="numeric">
         </div>
 
         <div class="input-container">
             <label>Desconto</label>
-            <div class="options-container">
-                <button class="option-button" data-value="40" onclick="setDiscount(40)">40%</button>
-                <button class="option-button selected" data-value="50" onclick="setDiscount(50)">50%</button>
-                <button class="option-button" data-value="60" onclick="setDiscount(60)">60%</button>
+            <button id="discount-button" class="value-button">50%</button>
+            <div id="discount-options" class="options-dropdown hidden">
+                <button class="option-button" data-value="40">40%</button>
+                <button class="option-button selected" data-value="50">50%</button>
+                <button class="option-button" data-value="60">60%</button>
             </div>
         </div>
 
         <div class="input-container">
             <label>Saving</label>
-            <div class="options-container">
-                <button class="option-button selected" data-value="22" onclick="setSaving(22)">22%</button>
-                <button class="option-button" data-value="18.5" onclick="setSaving(18.5)">18.5%</button>
+            <button id="saving-button" class="value-button">22%</button>
+            <div id="saving-options" class="options-dropdown hidden">
+                <button class="option-button" data-value="18.5">18.5%</button>
+                <button class="option-button selected" data-value="22">22%</button>
             </div>
         </div>
 
