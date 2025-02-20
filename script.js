@@ -41,7 +41,7 @@ function calculateResults() {
             const text = document.createElement('div');
             text.id = 'free-installation-text';
             text.className = 'free-installation';
-            text.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro! ✨';
+            text.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro!';
             discountCard.appendChild(text);
         }
     } else {
