@@ -22,8 +22,8 @@ function calculateResults() {
     const realEconomyIn5Years = realYearlyEconomy * 5;
 
     const isResidential = currentType === 'residential';
-    const totalInstallation = isResidential ? 280.00 : 690.00;
-    const installmentValue = isResidential ? 55.99 : 86.25;
+    const totalInstallation = isResidential ? 195.00 :390.00;
+    const installmentValue = isResidential ? 38.99 : 48.75;
     const installments = isResidential ? 5 : 8;
 
     // Update installation values
