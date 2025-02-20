@@ -1,6 +1,5 @@
-let currentDiscount = 50;
-let currentSaving = 22;
 let currentType = 'residential';
+const savingPercentage = 22;
 
 function formatCurrency(value) {
     return value.toLocaleString('pt-BR', {
@@ -11,62 +10,66 @@ function formatCurrency(value) {
 
 function calculateResults() {
     const billInput = document.getElementById('bill-value');
+    const discountRange = document.getElementById('discount-range');
     const billValue = parseFloat(billInput.value.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+    const discountPercentage = parseInt(discountRange.value);
 
-    const monthlyEconomy = (billValue * currentDiscount) / 100;
+    const monthlyEconomy = (billValue * discountPercentage) / 100;
     const yearlyEconomy = monthlyEconomy * 12;
-    const savingValue = (monthlyEconomy * currentSaving) / 100;
+    const savingValue = (monthlyEconomy * savingPercentage) / 100;
     const realMonthlyEconomy = monthlyEconomy - savingValue;
     const realYearlyEconomy = realMonthlyEconomy * 12;
-    const realEconomyPercentage = (realMonthlyEconomy / billValue) * 100 || 0;
+    const realEconomyIn5Years = realYearlyEconomy * 5;
 
-    // Installation values
     const isResidential = currentType === 'residential';
-    const installmentValue = isResidential ? 39.90 : 79.90;
+    const installmentValue = isResidential ? 280.00 : 690.00;
     const installments = isResidential ? 5 : 8;
-    const totalInstallation = installmentValue * installments;
+    const totalInstallation = installmentValue;
 
-    // First payment calculation
-    const balance = realMonthlyEconomy - totalInstallation;
-    const formula = `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(totalInstallation)} = ${formatCurrency(balance)}`;
+    // Update installation values
+    document.getElementById('installation-value').textContent = formatCurrency(installmentValue);
+    document.getElementById('installation-total').textContent = 
+        `${installments}x de ${formatCurrency(installmentValue / installments)}`;
 
-    // Update discount card style based on balance
-    const discountCard = document.querySelector('.discount-card');
-    const freeInstallationText = document.getElementById('free-installation-text');
-    
-    if (balance >= 0) {
-        discountCard.classList.remove('negative');
-        discountCard.classList.add('positive');
-        if (!freeInstallationText) {
-            const text = document.createElement('div');
-            text.id = 'free-installation-text';
-            text.className = 'free-installation';
-            text.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro!';
-            discountCard.appendChild(text);
-        }
-    } else {
-        discountCard.classList.remove('positive');
-        discountCard.classList.add('negative');
-        if (freeInstallationText) {
-            freeInstallationText.remove();
-        }
-    }
-
+    // Update economy values
     document.getElementById('monthly-economy').textContent = formatCurrency(monthlyEconomy);
     document.getElementById('yearly-economy').textContent = formatCurrency(yearlyEconomy);
     document.getElementById('saving-value').textContent = formatCurrency(savingValue);
     document.getElementById('real-monthly-economy').textContent = formatCurrency(realMonthlyEconomy);
     document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
-    document.getElementById('real-economy-percentage').textContent = `${realEconomyPercentage.toFixed(2)}%`;
-    
-    document.getElementById('installation-value').textContent = `${installments}x ${formatCurrency(installmentValue)}`;
-    document.getElementById('installation-total').textContent = `Total: ${formatCurrency(totalInstallation)}`;
+    document.getElementById('real-economy-5-years').textContent = formatCurrency(realEconomyIn5Years);
+
+    // Calculate and update first payment
+    const monthlyPayment = totalInstallation / installments;
+    const balance = realMonthlyEconomy - monthlyPayment;
     
     document.getElementById('first-payment').textContent = formatCurrency(balance);
-    document.getElementById('payment-formula').textContent = formula;
+    document.getElementById('payment-formula').textContent = 
+        `${formatCurrency(realMonthlyEconomy)} - ${formatCurrency(monthlyPayment)} = ${formatCurrency(balance)}`;
+
+    // Update discount card style
+    const discountCard = document.querySelector('.discount-card');
+    const existingMessage = discountCard.querySelector('.free-installation');
+    
+    if (balance >= 0) {
+        discountCard.classList.remove('negative');
+        discountCard.classList.add('positive');
+        if (!existingMessage) {
+            const message = document.createElement('div');
+            message.className = 'free-installation';
+            message.textContent = '✨ Instalação sai de graça e ainda sobra dinheiro!';
+            discountCard.appendChild(message);
+        }
+    } else {
+        discountCard.classList.remove('positive');
+        discountCard.classList.add('negative');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+    }
 }
 
-// Format input as currency
+// Format bill input as currency
 const billInput = document.getElementById('bill-value');
 billInput.addEventListener('input', function(e) {
     let value = e.target.value.replace(/\D/g, '');
@@ -91,27 +94,13 @@ typeButtons.forEach(button => {
     });
 });
 
-// Handle discount button
-const discountButton = document.getElementById('discount-button');
-const discountOptions = document.getElementById('discount-options');
+// Handle discount range
+const discountRange = document.getElementById('discount-range');
+const discountValue = document.getElementById('discount-value');
 
-discountButton.addEventListener('dblclick', function() {
-    discountOptions.classList.remove('hidden');
-});
-
-document.addEventListener('click', function(e) {
-    if (!discountOptions.contains(e.target) && e.target !== discountButton) {
-        discountOptions.classList.add('hidden');
-    }
-});
-
-discountOptions.addEventListener('click', function(e) {
-    if (e.target.classList.contains('option-button')) {
-        currentDiscount = parseFloat(e.target.dataset.value);
-        discountButton.textContent = `${currentDiscount}%`;
-        discountOptions.classList.add('hidden');
-        calculateResults();
-    }
+discountRange.addEventListener('input', function() {
+    discountValue.textContent = `${this.value}%`;
+    calculateResults();
 });
 
 // Handle saving button
