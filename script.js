@@ -22,12 +22,12 @@ function calculateResults() {
     const realEconomyIn5Years = realYearlyEconomy * 5;
 
     const isResidential = currentType === 'residential';
-    const installmentValue = isResidential ? 280.00 : 690.00;
+    const totalInstallation = isResidential ? 280.00 : 690.00;
+    const installmentValue = isResidential ? 55.99 : 86.25;
     const installments = isResidential ? 5 : 8;
-    const totalInstallation = installmentValue * installments;
 
     // Update installation values
-    document.getElementById('installation-value').textContent = formatCurrency(installmentValue);
+    document.getElementById('installation-value').textContent = formatCurrency(totalInstallation);
     document.getElementById('installation-total').textContent = 
         `${installments}x de ${formatCurrency(installmentValue)}`;
 
@@ -125,5 +125,21 @@ savingOptions.addEventListener('click', function(e) {
     }
 });
 
+// Initialize calculator with zero values
+function initializeCalculator() {
+    document.getElementById('bill-value').value = '';
+    document.getElementById('discount-range').value = 0;
+    document.getElementById('discount-value').textContent = '0%';
+    document.getElementById('monthly-economy').textContent = formatCurrency(0);
+    document.getElementById('yearly-economy').textContent = formatCurrency(0);
+    document.getElementById('saving-value').textContent = formatCurrency(0);
+    document.getElementById('real-monthly-economy').textContent = formatCurrency(0);
+    document.getElementById('real-yearly-economy').textContent = formatCurrency(0);
+    document.getElementById('real-economy-5-years').textContent = formatCurrency(0);
+    document.getElementById('first-payment').textContent = formatCurrency(0);
+    document.getElementById('payment-formula').textContent = `${formatCurrency(0)} - ${formatCurrency(0)} = ${formatCurrency(0)}`;
+}
+
 // Initial calculation
+initializeCalculator();
 calculateResults();
