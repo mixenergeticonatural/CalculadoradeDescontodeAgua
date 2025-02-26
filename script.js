@@ -255,12 +255,13 @@ function animateCounter(start, end, duration, element) {
 
 // Função para criar e atualizar os gráficos
 function updateChartData(monthlyValue) {
-    // Gráfico mensal (12 meses)
     const currentDate = new Date();
+
+    // Dados para o gráfico anual (12 meses)
     const monthLabels = [];
     const monthlyData = [];
     let accumulatedValue = 0;
-    
+
     for (let i = 0; i < 12; i++) {
         const month = new Date(currentDate);
         month.setMonth(currentDate.getMonth() + i);
@@ -269,12 +270,12 @@ function updateChartData(monthlyValue) {
         accumulatedValue += monthlyValue;
         monthlyData.push(accumulatedValue);
     }
-    
-    // Gráfico semestral (5 anos)
+
+    // Dados para o gráfico de 5 anos (10 semestres)
     const semesterLabels = [];
     const semesterData = [];
     accumulatedValue = 0;
-    
+
     for (let i = 0; i < 10; i++) {
         const semester = new Date(currentDate);
         semester.setMonth(currentDate.getMonth() + i * 6);
@@ -283,8 +284,8 @@ function updateChartData(monthlyValue) {
         accumulatedValue += monthlyValue * 6;
         semesterData.push(accumulatedValue);
     }
-    
-    // Cria ou atualiza o gráfico anual
+
+    // Atualiza o gráfico anual
     const annualChartCtx = document.getElementById('annual-chart').getContext('2d');
     if (annualChart) {
         annualChart.data.labels = monthLabels;
@@ -312,8 +313,20 @@ function updateChartData(monthlyValue) {
             }
         });
     }
-    
-    // Cria ou atualiza o gráfico de 5 anos
+
+    // Atualiza a tabela anual
+    const annualTableBody = document.querySelector('#annual-table tbody');
+    annualTableBody.innerHTML = ''; // Limpa a tabela antes de preencher
+    monthLabels.forEach((label, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${label}</td>
+            <td>${formatCurrency(monthlyData[index])}</td>
+        `;
+        annualTableBody.appendChild(row);
+    });
+
+    // Atualiza o gráfico de 5 anos
     const fiveYearChartCtx = document.getElementById('five-year-chart').getContext('2d');
     if (fiveYearChart) {
         fiveYearChart.data.labels = semesterLabels;
@@ -341,6 +354,18 @@ function updateChartData(monthlyValue) {
             }
         });
     }
+
+    // Atualiza a tabela de 5 anos
+    const fiveYearTableBody = document.querySelector('#five-year-table tbody');
+    fiveYearTableBody.innerHTML = ''; // Limpa a tabela antes de preencher
+    semesterLabels.forEach((label, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${label}</td>
+            <td>${formatCurrency(semesterData[index])}</td>
+        `;
+        fiveYearTableBody.appendChild(row);
+    });
 }
 
 // Inicializa a calculadora
