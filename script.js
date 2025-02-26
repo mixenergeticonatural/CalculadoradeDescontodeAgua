@@ -342,7 +342,12 @@ function updateChartData(monthlyValue) {
                     data: semesterData,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 2,
-                    fill: false
+                    fill: false,
+                    pointRadius: 6, // Tamanho dos pontos
+                    pointHoverRadius: 8, // Tamanho dos pontos ao passar o mouse
+                    pointBackgroundColor: 'rgba(153, 102, 255, 1)', // Cor de fundo dos pontos
+                    pointBorderColor: '#fff', // Cor da borda dos pontos
+                    pointBorderWidth: 2 // Largura da borda dos pontos
                 }]
             },
             options: {
