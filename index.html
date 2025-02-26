@@ -252,5 +252,62 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+    <!-- Modal do Gráfico Anual -->
+<div id="annual-chart-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Evolução dos seus Ganhos - Anual</h2>
+            <span class="close-button annual-chart-close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="chart-container">
+                <canvas id="annual-chart"></canvas>
+            </div>
+            <!-- Tabela abaixo do gráfico anual -->
+            <div class="table-container">
+                <table id="annual-table">
+                    <thead>
+                        <tr>
+                            <th>Mês/Ano</th>
+                            <th>Economia Acumulada (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Linhas serão preenchidas dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal do Gráfico de 5 Anos -->
+<div id="five-year-chart-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Evolução dos seus Ganhos - 5 Anos</h2>
+            <span class="close-button five-year-chart-close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="chart-container">
+                <canvas id="five-year-chart"></canvas>
+            </div>
+            <!-- Tabela abaixo do gráfico de 5 anos -->
+            <div class="table-container">
+                <table id="five-year-table">
+                    <thead>
+                        <tr>
+                            <th>Semestre/Ano</th>
+                            <th>Economia Acumulada (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Linhas serão preenchidas dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
