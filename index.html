@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Economia na Conta de Água</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1792/1792525.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1792/1792525.png">
 </head>
 <body>
     <div class="container">
@@ -115,11 +117,25 @@
             <div class="result-card economy-card">
                 <span class="result-label label-bold">Economia Real Anual</span>
                 <span class="result-value" id="real-yearly-economy">R$ 0,00</span>
+                <button id="show-annual-chart" class="chart-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" x2="12" y1="20" y2="10"></line>
+                        <line x1="18" x2="18" y1="20" y2="4"></line>
+                        <line x1="6" x2="6" y1="20" y2="16"></line>
+                    </svg>
+                </button>
             </div>
 
             <div class="result-card economy-card">
                 <span class="result-label label-bold">Economia Real em 5 Anos</span>
                 <span class="result-value" id="real-economy-5-years">R$ 0,00</span>
+                <button id="show-five-year-chart" class="chart-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" x2="12" y1="20" y2="10"></line>
+                        <line x1="18" x2="18" y1="20" y2="4"></line>
+                        <line x1="6" x2="6" y1="20" y2="16"></line>
+                    </svg>
+                </button>
             </div>
 
             <div class="result-card installation-card">
@@ -134,6 +150,10 @@
                 <span class="result-formula" id="payment-formula"></span>
             </div>
         </div>
+        
+        <a href="https://www.paguemenos.com.br" target="_blank" class="discount-button">
+            Garantir Meu Desconto Agora!
+        </a>
     </div>
 
     <div id="bill-modal" class="modal">
@@ -202,6 +222,35 @@
         </div>
     </div>
 
+    <div id="annual-chart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Evolução dos seus Ganhos - Anual</h2>
+                <span class="close-button annual-chart-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container">
+                    <canvas id="annual-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="five-year-chart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Evolução dos seus Ganhos - 5 Anos</h2>
+                <span class="close-button five-year-chart-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container">
+                    <canvas id="five-year-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
