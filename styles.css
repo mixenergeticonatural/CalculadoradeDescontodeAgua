@@ -91,6 +91,10 @@ h1 {
     font-weight: 700 !important;
 }
 
+.black-title {
+    color: #1a1a1a !important;
+}
+
 label {
     display: block;
     font-size: 16px;
@@ -208,6 +212,7 @@ input[type="text"]:focus {
     border-radius: 12px;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 /* Economia Mensal e Economia Anual */
@@ -223,6 +228,16 @@ input[type="text"]:focus {
     color: white;
 }
 
+/* Nova Fatura Com Desconto */
+.new-bill-card {
+    background-color: #20b2aa; /* Cor tifany */
+    color: white;
+}
+
+.new-bill-card .result-value {
+    color: white;
+}
+
 /* Saving */
 .saving-card {
     background-color: #e3f2fd;
@@ -234,25 +249,25 @@ input[type="text"]:focus {
 }
 
 /* Economia Real Mensal e Economia Real Anual */
-.result-card:nth-child(5),
-.result-card:nth-child(6) {
+.result-card:nth-child(6),
+.result-card:nth-child(7) {
     background-color: #e8f5e9;
 }
 
-.result-card:nth-child(5) .result-label,
-.result-card:nth-child(5) .result-value,
 .result-card:nth-child(6) .result-label,
-.result-card:nth-child(6) .result-value {
+.result-card:nth-child(6) .result-value,
+.result-card:nth-child(7) .result-label,
+.result-card:nth-child(7) .result-value {
     color: #1a1a1a;
 }
 
 /* Economia Real em 5 Anos */
-.result-card:nth-child(7) {
+.result-card:nth-child(8) {
     background-color: #ffab40;
 }
 
-.result-card:nth-child(7) .result-label,
-.result-card:nth-child(7) .result-value {
+.result-card:nth-child(8) .result-label,
+.result-card:nth-child(8) .result-value {
     color: #1a1a1a;
 }
 
@@ -322,6 +337,222 @@ input[type="text"]:focus {
     font-size: 14px;
 }
 
+.bill-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bill-button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.bill-button svg {
+    color: white;
+}
+
+.info-button {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.info-button svg {
+    color: #2563eb;
+}
+
+.info-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    text-align: center;
+}
+
+.logo-placeholder {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #555;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.bill-info {
+    margin-bottom: 30px;
+}
+
+.bill-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.bill-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.bill-value {
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.bill-savings {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bill-savings h3 {
+    font-size: 22px;
+    color: #2563eb;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(45deg, #2563eb, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s infinite alternate;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.bill-savings-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+}
+
+.savings-progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+    border-radius: 5px;
+    transition: width 1.5s ease-out;
+}
+
+/* Benefits modal */
+.benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.benefit-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 16px;
@@ -333,5 +564,24 @@ input[type="text"]:focus {
 
     .results-container {
         grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        margin: 15% auto;
+        width: 95%;
+    }
+
+    .logo-placeholder {
+        width: 40px;
+        height: 40px;
+    }
+
+    .modal-header h2 {
+        font-size: 18px;
+        margin-left: 50px;
+    }
+    
+    .bill-savings-value {
+        font-size: 28px;
     }
 }
