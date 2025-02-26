@@ -28,6 +28,12 @@ function calculateResults() {
     // Calcula a porcentagem real de desconto
     const realDiscountPercentage = billValue > 0 ? (realMonthlyEconomy / billValue) * 100 : 0;
 
+    // Calcula o valor da nova fatura com desconto
+    const newBillValue = billValue > 0 ? billValue - realMonthlyEconomy : 0;
+
+    // Calcula quantas faturas economizadas por ano (arredondando para baixo)
+    const billSavingsCount = newBillValue > 0 ? Math.floor(realYearlyEconomy / newBillValue * 10) / 10 : 0;
+
     const isResidential = currentType === 'residential';
     const totalInstallation = isResidential ? 195.00 : 390.00;
     const installmentValue = isResidential ? 38.99 : 48.75;
@@ -45,6 +51,19 @@ function calculateResults() {
     document.getElementById('real-yearly-economy').textContent = formatCurrency(realYearlyEconomy);
     document.getElementById('real-economy-5-years').textContent = formatCurrency(realEconomyIn5Years);
     document.getElementById('real-discount-percentage').textContent = formatPercentage(realDiscountPercentage);
+    document.getElementById('new-bill-value').textContent = formatCurrency(newBillValue);
+
+    // Atualiza os valores do modal da fatura
+    document.getElementById('bill-discount-value').textContent = formatCurrency(newBillValue);
+    
+    // Armazena o valor de faturas economizadas para uso na animação
+    document.getElementById('bill-savings-count').dataset.value = billSavingsCount.toFixed(1);
+    
+    // Atualiza a data de previsão (data atual + 30 dias)
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 30);
+    const formattedDate = futureDate.toLocaleDateString('pt-BR');
+    document.getElementById('bill-date').textContent = formattedDate;
 
     const balance = realMonthlyEconomy - totalInstallation;
     document.getElementById('first-payment').textContent = formatCurrency(balance);
@@ -129,11 +148,75 @@ savingOptions.addEventListener('click', function(e) {
     }
 });
 
+// Modal da fatura
+const billModal = document.getElementById('bill-modal');
+const showBillButton = document.getElementById('show-bill-button');
+const closeBillButton = document.querySelector('.close-button');
+
+showBillButton.addEventListener('click', function() {
+    billModal.style.display = 'block';
+    
+    // Inicia a animação de contagem
+    const billSavingsCount = document.getElementById('bill-savings-count');
+    const targetValue = parseFloat(billSavingsCount.dataset.value) || 0;
+    animateCounter(0, targetValue, 1500, billSavingsCount);
+    
+    // Anima a barra de progresso
+    setTimeout(() => {
+        document.getElementById('savings-progress').style.width = '100%';
+    }, 300);
+});
+
+closeBillButton.addEventListener('click', function() {
+    billModal.style.display = 'none';
+    // Reseta a barra de progresso
+    document.getElementById('savings-progress').style.width = '0%';
+});
+
+// Modal de benefícios
+const benefitsModal = document.getElementById('benefits-modal');
+const showBenefitsButton = document.getElementById('show-benefits-button');
+const closeBenefitsButton = document.querySelector('.benefits-close');
+
+showBenefitsButton.addEventListener('click', function() {
+    benefitsModal.style.display = 'block';
+});
+
+closeBenefitsButton.addEventListener('click', function() {
+    benefitsModal.style.display = 'none';
+});
+
+// Fecha os modais ao clicar fora deles
+window.addEventListener('click', function(e) {
+    if (e.target === billModal) {
+        billModal.style.display = 'none';
+        document.getElementById('savings-progress').style.width = '0%';
+    }
+    if (e.target === benefitsModal) {
+        benefitsModal.style.display = 'none';
+    }
+});
+
+// Função para animar a contagem
+function animateCounter(start, end, duration, element) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = progress * (end - start) + start;
+        element.textContent = value.toFixed(1);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
 // Inicializa a calculadora
 function initializeCalculator() {
     document.getElementById('bill-value').value = '';
-    document.getElementById('discount-range').value = 35;
-    document.getElementById('discount-value').textContent = '35%';
+    document.getElementById('discount-range').value = 50;
+    document.getElementById('discount-value').textContent = '50%';
     document.getElementById('monthly-economy').textContent = formatCurrency(0);
     document.getElementById('yearly-economy').textContent = formatCurrency(0);
     document.getElementById('saving-value').textContent = formatCurrency(0);
@@ -143,6 +226,9 @@ function initializeCalculator() {
     document.getElementById('real-discount-percentage').textContent = formatPercentage(0);
     document.getElementById('first-payment').textContent = formatCurrency(0);
     document.getElementById('payment-formula').textContent = `${formatCurrency(0)} - ${formatCurrency(0)} = ${formatCurrency(0)}`;
+    document.getElementById('new-bill-value').textContent = formatCurrency(0);
+    document.getElementById('bill-savings-count').textContent = "0";
+    document.getElementById('bill-savings-count').dataset.value = "0";
 }
 
 initializeCalculator();
