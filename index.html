@@ -51,8 +51,8 @@
 
         <div class="input-container">
             <label class="label-bold">Desconto</label>
-            <input type="range" id="discount-range" min="35" max="65" step="5" value="35" class="slider">
-            <div class="slider-value" id="discount-value">35%</div>
+            <input type="range" id="discount-range" min="35" max="65" step="1" value="50" class="slider">
+            <div class="slider-value" id="discount-value">50%</div>
         </div>
 
         <div class="input-container">
@@ -76,13 +76,34 @@
                 <span class="result-value" id="yearly-economy">R$ 0,00</span>
             </div>
 
+            <div class="result-card new-bill-card">
+                <span class="result-label label-bold black-title">Valor Fatura Nova Com Desconto</span>
+                <span class="result-value" id="new-bill-value">R$ 0,00</span>
+                <button id="show-bill-button" class="bill-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </button>
+            </div>
+
             <div class="result-card saving-card">
-                <span class="result-label label-bold">Saving Mensal</span>
+                <span class="result-label label-bold black-title">Saving Mensal</span>
                 <span class="result-value" id="saving-value">R$ 0,00</span>
+                <button id="show-benefits-button" class="bill-button info-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                </button>
             </div>
 
             <div class="result-card real-discount-card">
-                <span class="result-label label-bold">Desconto Real</span>
+                <span class="result-label label-bold black-title">Desconto Real</span>
                 <span class="result-value" id="real-discount-percentage">0%</span>
             </div>
 
@@ -102,18 +123,85 @@
             </div>
 
             <div class="result-card installation-card">
-                <span class="result-label label-bold">Valor da Instalação</span>
+                <span class="result-label label-bold black-title">Valor da Instalação</span>
                 <span class="result-value" id="installation-value">R$ 0,00</span>
                 <span class="result-total" id="installation-total"></span>
             </div>
 
             <div class="result-card discount-card">
-                <span class="result-label label-bold">Pague com o desconto do seu primeiro mês</span>
+                <span class="result-label label-bold black-title">Pague com o desconto do seu primeiro mês</span>
                 <span class="result-value" id="first-payment">R$ 0,00</span>
                 <span class="result-formula" id="payment-formula"></span>
             </div>
         </div>
     </div>
+
+    <div id="bill-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="logo-placeholder">
+                    <img src="https://github.com/user-attachments/assets/8ef14511-6d64-4be8-b35a-3df88d91ec7f" alt="Logo Sabesp" id="sabesp-logo">
+                </div>
+                <h2>Nova Fatura Com Desconto Sabesp</h2>
+                <span class="close-button">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="bill-info">
+                    <div class="bill-row">
+                        <span class="bill-label">Data Previsão Fatura:</span>
+                        <span class="bill-value" id="bill-date">--/--/----</span>
+                    </div>
+                    <div class="bill-row">
+                        <span class="bill-label">Valor Fatura com Desconto:</span>
+                        <span class="bill-value" id="bill-discount-value">R$ 0,00</span>
+                    </div>
+                </div>
+                <div class="bill-savings">
+                    <h3>Você está economizando por Ano</h3>
+                    <div class="bill-savings-value">
+                        <span id="bill-savings-count">0</span> faturas
+                    </div>
+                    <div class="savings-progress-bar">
+                        <div class="progress-fill" id="savings-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="benefits-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Benefícios da Taxa Mensal</h2>
+                <span class="close-button benefits-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text">Garantia de 1 ano</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text">Manutenção sem custo</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text">Garantia de Legalidade</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text">Eu só ganho se você ganha</div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <div class="benefit-text">Agregar valor no seu negócio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
